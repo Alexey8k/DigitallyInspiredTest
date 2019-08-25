@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI3DTasks", "UI3DTasks\UI3DTasks.csproj", "{F7559DA6-9D93-4C0F-AD34-49EABBD8F99E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfWindowTheme", "WpfWindowTheme\WpfWindowTheme.csproj", "{0CCB9A01-A432-479C-AB20-B20DD6AACC32}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F7559DA6-9D93-4C0F-AD34-49EABBD8F99E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7559DA6-9D93-4C0F-AD34-49EABBD8F99E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7559DA6-9D93-4C0F-AD34-49EABBD8F99E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CCB9A01-A432-479C-AB20-B20DD6AACC32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CCB9A01-A432-479C-AB20-B20DD6AACC32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CCB9A01-A432-479C-AB20-B20DD6AACC32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CCB9A01-A432-479C-AB20-B20DD6AACC32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
