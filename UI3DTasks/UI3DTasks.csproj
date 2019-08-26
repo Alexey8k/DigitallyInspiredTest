@@ -94,5 +94,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WpfWindowTheme\WpfWindowTheme.csproj">
+      <Project>{0ccb9a01-a432-479c-ab20-b20dd6aacc32}</Project>
+      <Name>WpfWindowTheme</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
