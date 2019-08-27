@@ -12,5 +12,7 @@ namespace WpfWindowTheme.Models
         public double Height { get; set; }
 
         public Brush Background { get; set; }
+
+        public Brush Foreground { get; set; }
     }
 }

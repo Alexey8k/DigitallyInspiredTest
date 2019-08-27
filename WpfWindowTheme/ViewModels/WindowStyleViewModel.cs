@@ -13,7 +13,12 @@ namespace WpfWindowTheme.ViewModels
 {
     internal class WindowStyleViewModel
     {
-        public WindowCaption WindowCaption { get; set; } = new WindowCaption { Height = 32, Background = Brushes.RoyalBlue };
+        public WindowCaption WindowCaption { get; private set; } = new WindowCaption
+        {
+            Height = 32,
+            Background = Brushes.RoyalBlue,
+            Foreground = Brushes.Black
+        };
 
         public ICommand CloseWindowCommand => new ActionCommand(
             sender => InvokeIfIsWindow(sender, window => SystemCommands.CloseWindow(window)));
