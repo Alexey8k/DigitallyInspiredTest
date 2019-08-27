@@ -1,0 +1,38 @@
+﻿<Window x:Class="UI3DTasks.Views.Task3DView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:h="http://helix-toolkit.org/wpf"
+        xmlns:vm="clr-namespace:UI3DTasks.ViewModels"
+        Style="{StaticResource WindowStyle}"
+        mc:Ignorable="d"
+        Title="TaskView" Height="450" Width="800">
+    <Window.Resources>
+        <vm:Task3DViewModel x:Key="Task3DViewModel"  />
+    </Window.Resources>
+    <Window.DataContext>
+        <Binding Source="{StaticResource Task3DViewModel}" /> 
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ItemsControl Grid.Column="0" Grid.RowSpan="2" />
+        <h:HelixViewport3D Grid.Column="1" Grid.Row="0"
+                           ZoomExtentsWhenLoaded="True">
+            <h:SunLight />
+            <ModelVisual3D Content="{Binding Model3D}" />
+            
+        </h:HelixViewport3D>
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
+            <Button Content="LOAD" Command="{Binding LoadCommand}" />
+            <Button Content="CLEAR" Command="{Binding ClearCommand}" />
+        </StackPanel>
+    </Grid>
+</Window>

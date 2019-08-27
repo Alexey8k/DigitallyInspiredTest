@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace UI3DTasks
+namespace UI3DTasks.Views
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для TaskView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Task3DView : Window
     {
-        public MainWindow()
+        public Task3DView()
         {
             InitializeComponent();
         }
