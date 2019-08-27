@@ -4,39 +4,39 @@
                     xmlns:converter="clr-namespace:WpfWindowTheme.Converters"
                     xmlns:vm="clr-namespace:WpfWindowTheme.ViewModels">
 
-    <SolidColorBrush x:Key="WindowCaptionForegroundInactive" Color="#474747" />
+    <Style x:Key="WindowStyle" TargetType="{x:Type Window}">
+        <Style.Resources>
+            <SolidColorBrush x:Key="WindowCaptionForegroundInactive" Color="#474747" />
+            <converter:MaximizedWindowSizeConverter x:Key="MaximizedWindowSizeConverter" />
+            <converter:IconValueNullToDefaultIconConverter x:Key="IconValueNullToDefaultIconConverter" />
+            <vm:WindowStyleViewModel x:Key="WindowStyleViewModel" />
 
-    <converter:MaximizedWindowSizeConverter x:Key="MaximizedWindowSizeConverter" />
-    <converter:IconValueNullToDefaultIconConverter x:Key="IconValueNullToDefaultIconConverter" />
-    <vm:WindowStyleViewModel x:Key="WindowStyleViewModel" />
-
-    <Style x:Key="WindowCaptionButton" TargetType="{x:Type Button}">
-        <Setter Property="Focusable" Value="False" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid>
-                        <Border x:Name="PART_Border"
+            <Style x:Key="WindowCaptionButton" TargetType="{x:Type Button}">
+                <Setter Property="Focusable" Value="False" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Grid>
+                                <Border x:Name="PART_Border"
                                 Width="32"
                                 Background="Transparent" />
-                        <ContentPresenter />
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="PART_Border" Property="Background" Value="White" />
-                            <Setter TargetName="PART_Border" Property="Opacity" Value="0.3" />
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="PART_Border" Property="Background" Value="Black" />
-                            <Setter TargetName="PART_Border" Property="Opacity" Value="0.3" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="WindowStyle" TargetType="{x:Type Window}">
+                                <ContentPresenter />
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="PART_Border" Property="Background" Value="White" />
+                                    <Setter TargetName="PART_Border" Property="Opacity" Value="0.3" />
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="PART_Border" Property="Background" Value="Black" />
+                                    <Setter TargetName="PART_Border" Property="Opacity" Value="0.3" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Style.Resources>
         <Setter Property="AllowsTransparency" Value="True" />
         <Setter Property="WindowStyle" Value="None" />
         <Setter Property="Background" Value="Transparent" />
@@ -51,9 +51,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
-                    <Border Background="Transparent">
+                    <Border Background="Transparent" Padding="{Binding Source={x:Static SystemParameters.WindowResizeBorderThickness}}">
                         <Border x:Name="PART_Conteiner"
-                                Margin="{Binding Source={x:Static SystemParameters.WindowResizeBorderThickness}}"
                                 CornerRadius="3 3 0 0">
                             <Grid>
                                 <Grid.RowDefinitions>
