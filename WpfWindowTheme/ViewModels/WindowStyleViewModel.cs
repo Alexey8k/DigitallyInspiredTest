@@ -21,11 +21,23 @@ namespace WpfWindowTheme.ViewModels
         public ICommand MinimizeWindowCommand => new ActionCommand(
             sender => InvokeIfIsWindow(sender, window => SystemCommands.MinimizeWindow(window)));
 
-        public ICommand MaximizeCommand => new ActionCommand(
+        public ICommand MaximizeWindowCommand => new ActionCommand(
             sender => InvokeIfIsWindow(sender, window => SystemCommands.MaximizeWindow(window)));
 
         public ICommand RestoreWindowCommand => new ActionCommand(
             sender => InvokeIfIsWindow(sender, window => SystemCommands.RestoreWindow(window)));
+
+        public ICommand MouseLeftButtonDownOnIconCommand => new ActionCommand(
+            sender => InvokeIfIsWindow(sender, window => ShowSystemMenu(window)));
+
+        public ICommand MouseRightButtonUpOnIconCommand => new ActionCommand(
+            sender => InvokeIfIsWindow(sender, window => ShowSystemMenu(window, false)));
+
+        private void ShowSystemMenu(Window window, bool isLeftButtonClick = true)
+            => SystemCommands.ShowSystemMenu(window,
+                window.PointToScreen(isLeftButtonClick
+                    ? new Point(SystemParameters.WindowResizeBorderThickness.Left, WindowCaption.Height + SystemParameters.WindowResizeBorderThickness.Top)
+                    : Mouse.GetPosition(window)));
 
         private void InvokeIfIsWindow(object sender, Action<Window> action)
         {
