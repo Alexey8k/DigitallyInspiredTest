@@ -52,7 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\IconValueNullToDefaultIconConverter.cs" />
-    <Compile Include="Converters\MaximizedWindowSizeConverter.cs" />
     <Compile Include="Models\WindowCaption.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -67,7 +66,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Services\WmHandler.cs" />
+    <Compile Include="Services\WmInterceptorService.cs" />
+    <Compile Include="ViewModels\Common\BaseViewModel.cs" />
     <Compile Include="ViewModels\WindowStyleViewModel.cs" />
+    <Compile Include="WmHandlers\BasePositionHandler.cs" />
+    <Compile Include="WmHandlers\WmGetMinMaxInfoHandler.cs" />
+    <Compile Include="WmHandlers\WmWindowPosChangedHandler.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

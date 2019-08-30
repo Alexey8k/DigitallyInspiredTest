@@ -1,4 +1,5 @@
 ﻿using Microsoft.Expression.Interactivity.Core;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,16 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfWindowTheme.Models;
+using WpfWindowTheme.Services;
+using WpfWindowTheme.ViewModels.Common;
+using WpfWindowTheme.WmHandlers;
 
 namespace WpfWindowTheme.ViewModels
 {
-    internal class WindowStyleViewModel
+    internal class WindowStyleViewModel : BaseViewModel
     {
+        private WmInterceptorService _wmInterceptorService;
+
         public WindowCaption WindowCaption { get; private set; } = new WindowCaption
         {
             Height = 32,
@@ -37,6 +43,16 @@ namespace WpfWindowTheme.ViewModels
 
         public ICommand MouseRightButtonUpOnIconCommand => new ActionCommand(
             sender => InvokeIfIsWindow(sender, window => ShowSystemMenu(window, false)));
+
+        public ICommand WindowCaptionLoadedCommand => new ActionCommand(
+            sender => InvokeIfIsWindow(sender, window => InitWmInterceptorService(window)));
+
+        private void InitWmInterceptorService(Window window)
+        {
+            _wmInterceptorService = new WmInterceptorService(window);
+            _wmInterceptorService.AddHandler(new WmWindowPosChangedHandler());
+            _wmInterceptorService.AddHandler(new WmGetMinMaxInfoHandler());
+        }
 
         private void ShowSystemMenu(Window window, bool isLeftButtonClick = true)
             => SystemCommands.ShowSystemMenu(window,
