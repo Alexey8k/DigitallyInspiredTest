@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="TaskView" Height="450" Width="800">
     <Window.Resources>
-        <vm:Task3DViewModel x:Key="Task3DViewModel"  />
+        <vm:Task3DViewModel x:Key="Task3DViewModel" />
     </Window.Resources>
     <Window.DataContext>
         <Binding Source="{StaticResource Task3DViewModel}" /> 
