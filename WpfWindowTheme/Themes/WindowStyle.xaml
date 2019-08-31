@@ -6,7 +6,7 @@
 
     <Style x:Key="WindowStyle" TargetType="{x:Type Window}">
         <Style.Resources>
-            <SolidColorBrush x:Key="WindowCaptionForegroundInactive" Color="#474747" />
+            <SolidColorBrush x:Key="WindowCaptionForegroundInactive" Color="LightSteelBlue" />
             <converter:IconValueNullToDefaultIconConverter x:Key="IconValueNullToDefaultIconConverter" />
             <vm:WindowStyleViewModel x:Key="WindowStyleViewModel" />
 
