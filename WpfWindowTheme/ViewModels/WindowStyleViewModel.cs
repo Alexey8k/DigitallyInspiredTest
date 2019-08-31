@@ -23,7 +23,7 @@ namespace WpfWindowTheme.ViewModels
         {
             Height = 32,
             Background = Brushes.RoyalBlue,
-            Foreground = Brushes.Black
+            Foreground = Brushes.LightCyan
         };
 
         public ICommand CloseWindowCommand => new ActionCommand(

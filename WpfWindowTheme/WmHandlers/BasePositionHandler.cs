@@ -11,9 +11,10 @@ namespace WpfWindowTheme.WmHandlers
 {
     internal abstract class BasePositionHandler : WmHandler
     {
+        private const int MONITOR_DEFAULTTONEAREST = 0x00000002;
+
         protected (int X, int Y, int Width, int Height) MaxWindowPosition(IntPtr hwnd)
         {
-            int MONITOR_DEFAULTTONEAREST = 0x00000002;
             IntPtr monitor = MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
 
             if (monitor == IntPtr.Zero) return (0, 0, 0, 0);
