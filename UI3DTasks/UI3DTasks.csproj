@@ -35,11 +35,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.2.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="HelixToolkit.Wpf, Version=2.9.0.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
       <HintPath>..\packages\HelixToolkit.Wpf.2.9.0\lib\net45\HelixToolkit.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.0.1\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Extensions.Factory, Version=3.3.2.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Extensions.Factory.3.3.2\lib\net45\Ninject.Extensions.Factory.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,15 +71,43 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Abstract\ITask3DViewModelFactory.cs" />
+    <Compile Include="Abstract\IModelImporter.cs" />
+    <Compile Include="Abstract\IControlPanelViewModelFactory.cs" />
+    <Compile Include="AttachedProperties\TextBlock.cs" />
+    <Compile Include="Concret\ModelImporter.cs" />
+    <Compile Include="CustomControls\EasyListView.cs" />
+    <Compile Include="Infrastructure\UITask3DModule.cs" />
+    <Compile Include="UserControls\ControlPanel.xaml.cs">
+      <DependentUpon>ControlPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\Common\BaseViewModel.cs" />
+    <Compile Include="ViewModels\Common\IControlPanelViewModel.cs" />
+    <Compile Include="ViewModels\Common\ITask3DViewModel.cs" />
+    <Compile Include="ViewModels\Common\IZAxisMovementControlPanelViewModel.cs" />
+    <Compile Include="ViewModels\Common\IZAxisMovementTas3DViewModel.cs" />
+    <Compile Include="ViewModels\ControlPanelViewModel.cs" />
     <Compile Include="ViewModels\Task3DViewModel.cs" />
-    <Compile Include="Views\Task3DView.xaml.cs">
-      <DependentUpon>Task3DView.xaml</DependentUpon>
+    <Compile Include="ViewModels\UITask3DViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="ViewModels\ZAxisMovementControlPanelViewModel.cs" />
+    <Compile Include="ViewModels\ZAxisMovementTask3DViewModel.cs" />
+    <Compile Include="Views\UITask3DView.xaml.cs">
+      <DependentUpon>UITask3DView.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\Task3DView.xaml">
+    <Page Include="Styles\ResourceDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ControlPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UITask3DView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -105,8 +145,6 @@
       <Name>WpfWindowTheme</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Styles\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

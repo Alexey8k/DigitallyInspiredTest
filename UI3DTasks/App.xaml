@@ -1,12 +1,14 @@
 ﻿<Application x:Class="UI3DTasks.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:UI3DTasks"
-             StartupUri="Views/Task3DView.xaml">
+             xmlns:vmLocator="clr-namespace:UI3DTasks.ViewModels"
+             StartupUri="Views/UITask3DView.xaml">
     <Application.Resources>
         <ResourceDictionary>
+            <vmLocator:ViewModelLocator x:Key="ViewModelLocator" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/WpfWindowTheme;component/Themes/WindowStyle.xaml" />
+                <ResourceDictionary Source="Styles/ResourceDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

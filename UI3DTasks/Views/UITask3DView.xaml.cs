@@ -17,9 +17,9 @@ namespace UI3DTasks.Views
     /// <summary>
     /// Логика взаимодействия для TaskView.xaml
     /// </summary>
-    public partial class Task3DView : Window
+    public partial class UITask3DView : Window
     {
-        public Task3DView()
+        public UITask3DView()
         {
             InitializeComponent();
         }

@@ -1,6 +1,6 @@
 ﻿using HelixToolkit.Wpf;
-using Microsoft.Expression.Interactivity.Core;
 using Microsoft.Win32;
+using Microsoft.Xaml.Behaviors.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,26 +8,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Media3D;
+using UI3DTasks.Abstract;
+using UI3DTasks.ViewModels.Common;
 
 namespace UI3DTasks.ViewModels
 {
-    internal class Task3DViewModel
+    internal class Task3DViewModel : BaseViewModel, ITask3DViewModel
     {
-        public Model3DGroup Model3D { get; private set; }
-
-        public ICommand LoadCommand => new ActionCommand(() =>
+        public Task3DViewModel(string name, IControlPanelViewModelFactory factoryControlPanelViewModel)
         {
-            var openFileDialog = new OpenFileDialog { DefaultExt = ".obj", Filter = "3D Model|*.obj" };
-            if (openFileDialog.ShowDialog() ?? false)
+            Name = name;
+            ControlPanelViewModel = factoryControlPanelViewModel.Create(this);
+        }
+
+        public string Name { get; private set; }
+
+        private Model3DGroup _model3D;
+        public Model3DGroup Model3D
+        {
+            get => _model3D;
+            set
             {
-                if (Model3D != null) Model3D = null;
-                Model3D = new ModelImporter().Load(openFileDialog.FileName);
+                _model3D = value;
+                OnPropertyChanged();
             }
-        });
+        }
 
-        public ICommand ClearCommand => new ActionCommand(() =>
-        {
-            Model3D = null;
-        });
+        public IControlPanelViewModel ControlPanelViewModel { get; private set; }
     }
 }
