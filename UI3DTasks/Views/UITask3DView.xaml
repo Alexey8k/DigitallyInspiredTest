@@ -16,12 +16,12 @@
     <DockPanel>
 
         <cc:EasyListView x:Name="Task3DList" Style="{StaticResource Task3DListItemsControl}" 
-                      DockPanel.Dock="Left" ItemsSource="{Binding Tasks}">
+                      DockPanel.Dock="Left" ItemsSource="{Binding Tasks}" IsTabStop="False">
             
         </cc:EasyListView>
-        <Separator DockPanel.Dock="Left" 
+        <Separator DockPanel.Dock="Left"
                    Style="{StaticResource VerticalSeparator}" />
-        <ContentControl Content="{Binding ElementName=Task3DList,Path=SelectedItem}" />
+        <ContentControl Content="{Binding ElementName=Task3DList,Path=SelectedItem}" IsTabStop="False" />
         
         
     </DockPanel>
