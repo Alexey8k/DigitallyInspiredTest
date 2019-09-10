@@ -2,8 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:UI3DTasks.Styles">
 
-    <SolidColorBrush x:Key="ControlMouseOverColor" Color="MediumOrchid" />
-
     <Style x:Key="SliderButtonStyle" TargetType="{x:Type RepeatButton}">
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
@@ -82,21 +80,67 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Rectangle>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Orientation,RelativeSource={RelativeSource TemplatedParent}}" Value="Vertical">
+                            <Setter Property="Height" Value="5" />
+                            <Setter Property="Width" Value="12.5" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type Slider}">
-        <Setter Property="Template">
+    <Style x:Key="SliderItemsContainer" TargetType="{x:Type ItemsControl}">
+        <Setter Property="ItemsPanel">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Slider}">
+                <ItemsPanelTemplate>
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Orientation,RelativeSource={RelativeSource TemplatedParent}}" Value="Vertical">
+                <Setter Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" MinWidth="{TemplateBinding MinWidth}" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                            </Grid>
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type Slider}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Slider}">
+                    <ControlTemplate.Resources>
+                        <LinearGradientBrush x:Key="HorizontalTrackBackgroundBrush" EndPoint="0.5 1" StartPoint="0.5 0">
+                            <GradientStop Color="LightGray" Offset="0" />
+                            <GradientStop Color="Black" Offset="0.5" />
+                            <GradientStop Color="LightGray" Offset="1" />
+                        </LinearGradientBrush>
+                        <LinearGradientBrush x:Key="VerticalTrackBackgroundBrush" EndPoint="1 0.5" StartPoint="0 0.5">
+                            <GradientStop Color="LightGray" Offset="0" />
+                            <GradientStop Color="Black" Offset="0.5" />
+                            <GradientStop Color="LightGray" Offset="1" />
+                        </LinearGradientBrush>
+                    </ControlTemplate.Resources>
+                    <ItemsControl Style="{StaticResource SliderItemsContainer}">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
@@ -123,17 +167,8 @@
                         </VisualStateManager.VisualStateGroups>
                         <Border x:Name="TrackBackground"
                                 Margin="0"
-                                Height="5"
-                                Grid.Row="1">
-                            <Border.Background>
-                                <LinearGradientBrush EndPoint="0.5 1" StartPoint="0.5 0">
-                                    <GradientStop Color="LightGray" Offset="0" />
-                                    <GradientStop Color="Black" Offset="0.5" />
-                                    <GradientStop Color="LightGray" Offset="1" />
-                                </LinearGradientBrush>
-                            </Border.Background>
-                        </Border>
-                        <Track Grid.Row="1" x:Name="PART_Track">
+                                Background="{StaticResource HorizontalTrackBackgroundBrush}" />
+                        <Track x:Name="PART_Track">
                             <Track.DecreaseRepeatButton>
                                 <RepeatButton Style="{StaticResource SliderButtonStyle}" Command="Slider.DecreaseLarge" />
                             </Track.DecreaseRepeatButton>
@@ -144,11 +179,22 @@
                                 <RepeatButton Style="{StaticResource SliderButtonStyle}" Command="Slider.IncreaseLarge" />
                             </Track.IncreaseRepeatButton>
                         </Track>
-                        
-                    </Grid>
+                    </ItemsControl>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self},Path=Orientation}" Value="Horizontal">
+                            <Setter TargetName="TrackBackground" Property="Grid.Row" Value="1" />
+                            <Setter TargetName="TrackBackground" Property="Height" Value="5" />
+                            <Setter TargetName="PART_Track" Property="Grid.Row" Value="1" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self},Path=Orientation}" Value="Vertical">
+                            <Setter TargetName="TrackBackground" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="TrackBackground" Property="Width" Value="5" />
+                            <Setter TargetName="TrackBackground" Property="Background" Value="{StaticResource VerticalTrackBackgroundBrush}" />
+                            <Setter TargetName="PART_Track" Property="Grid.Column" Value="1" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
 </ResourceDictionary>

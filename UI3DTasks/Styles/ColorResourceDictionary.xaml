@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:UI3DTasks.Styles">
+    
+    <Color x:Key="ControlMouseOverColor">BlueViolet</Color>
+
+    <Color x:Key="ControlPressedColor">Violet</Color>
+    <Color x:Key="PressedBorderColor">BlueViolet</Color>
+
+    <Color x:Key="DisabledControlColor">#FFE8EDF9</Color>
+    <Color x:Key="DisabledForegroundColor">#FF888888</Color>
+    <Color x:Key="DisabledBorderColor">#FF888888</Color>
+</ResourceDictionary>
