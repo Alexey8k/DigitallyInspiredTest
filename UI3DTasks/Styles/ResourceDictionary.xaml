@@ -208,10 +208,12 @@
                                 <DoubleAnimationUsingKeyFrames Storyboard.TargetName="TranslateTransform3D"
                                                                Storyboard.TargetProperty="OffsetZ"
                                                                AutoReverse="False" 
+                                                               Duration="0:0:6"
                                                                RepeatBehavior="Forever">
-                                    <LinearDoubleKeyFrame Value="{Binding ZAxisMovementControlPanelViewModel.ZMin,Mode=OneWay}" KeyTime="0:0:2" />
-                                    <LinearDoubleKeyFrame Value="{Binding ZAxisMovementControlPanelViewModel.ZMax,Mode=OneWay}" KeyTime="0:0:6" />
-                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:8" />
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="Paced" />
+                                    <LinearDoubleKeyFrame Value="{Binding ZAxisMovementControlPanelViewModel.ZMin,Mode=OneWay}" KeyTime="Paced" />
+                                    <LinearDoubleKeyFrame Value="{Binding ZAxisMovementControlPanelViewModel.ZMax,Mode=OneWay}" KeyTime="Paced" />
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="Paced" />
                                 </DoubleAnimationUsingKeyFrames>
                             </Storyboard>
                         </i:ControlStoryboardAction.Storyboard>

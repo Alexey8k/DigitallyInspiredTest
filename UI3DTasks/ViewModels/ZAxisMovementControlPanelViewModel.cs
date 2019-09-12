@@ -1,14 +1,10 @@
-﻿using HelixToolkit.Wpf;
-using Microsoft.Xaml.Behaviors.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Media3D;
 using UI3DTasks.ViewModels.Common;
 
 namespace UI3DTasks.ViewModels
@@ -55,6 +51,7 @@ namespace UI3DTasks.ViewModels
             get => _isMoveModel3D;
             set
             {
+                if (!_isMoveModel3D ^ value) return;
                 _isMoveModel3D = value;
                 OnPropertyChanged();
             }
