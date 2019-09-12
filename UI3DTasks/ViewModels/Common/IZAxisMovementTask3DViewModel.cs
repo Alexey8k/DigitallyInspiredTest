@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UI3DTasks.ViewModels.Common
 {
-    public interface IZAxisMovementTas3DViewModel
+    public interface IZAxisMovementTask3DViewModel
     {
         IZAxisMovementControlPanelViewModel ZAxisMovementControlPanelViewModel { get; }
     }

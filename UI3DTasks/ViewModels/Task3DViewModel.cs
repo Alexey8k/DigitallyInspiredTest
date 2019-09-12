@@ -15,10 +15,10 @@ namespace UI3DTasks.ViewModels
 {
     internal class Task3DViewModel : BaseViewModel, ITask3DViewModel
     {
-        public Task3DViewModel(string name, IControlPanelViewModelFactory factoryControlPanelViewModel)
+        public Task3DViewModel(string name, IControlPanelViewModelFactory ControlPanelViewModelFactory)
         {
             Name = name;
-            ControlPanelViewModel = factoryControlPanelViewModel.Create(this);
+            ControlPanelViewModel = ControlPanelViewModelFactory.Create(this);
         }
 
         public string Name { get; private set; }

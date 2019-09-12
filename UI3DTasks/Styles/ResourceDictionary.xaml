@@ -1,15 +1,18 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:h="http://helix-toolkit.org/wpf"
                     xmlns:vm="clr-namespace:UI3DTasks.ViewModels"
                     xmlns:cc="clr-namespace:UI3DTasks.CustomControls"
+                    xmlns:c="clr-namespace:UI3DTasks.Converters"
+                    xmlns:dts="clr-namespace:UI3DTasks.DataTemplateSelectors"
                     xmlns:ap="clr-namespace:UI3DTasks.AttachedProperties">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ColorResourceDictionary.xaml" />
         <ResourceDictionary Source="ControlPanelButtonTheme.xaml" />
         <ResourceDictionary Source="SliderTheme.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    
+
     <SolidColorBrush x:Key="SeparatorBackgroundBrush" Color="DimGray" />
 
     <Style TargetType="{x:Type TextBlock}">
@@ -95,7 +98,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <DataTemplate DataType="{x:Type vm:ControlPanelViewModel}">
         <DataTemplate.Resources>
             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ControlPanelButton}" />
@@ -137,6 +140,14 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click" SourceObject="{Binding ElementName=Start}">
+                        <i:ChangePropertyAction PropertyName="IsMoveModel3D" TargetObject="{Binding}" Value="True" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="Click" SourceObject="{Binding ElementName=Stop}">
+                        <i:ChangePropertyAction PropertyName="IsMoveModel3D" TargetObject="{Binding}" Value="False" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="3" />
@@ -147,21 +158,86 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Label Grid.Column="0" Grid.Row="0" Content="Min Z" />
-                <Slider Grid.Column="2" Grid.Row="0" Minimum="-25" Maximum="-5" Value="{Binding ZMin}" />
+                <Slider Grid.Column="2" Grid.Row="0" 
+                        Minimum="{Binding ZMinDown,Mode=OneTime}" 
+                        Maximum="{Binding ZMinUp,Mode=OneTime}" 
+                        Value="{Binding ZMin}" />
                 <Label Grid.Column="0" Grid.Row="1" Content="Max Z" />
-                <Slider Grid.Column="2" Grid.Row="1" Minimum="5" Maximum="25" Value="{Binding ZMax}" />
+                <Slider Grid.Column="2" Grid.Row="1" 
+                        Minimum="{Binding ZMaxDown,Mode=OneTime}" 
+                        Maximum="{Binding ZMaxUp,Mode=OneTime}" 
+                        Value="{Binding ZMax}" />
             </Grid>
-            <Button Grid.Column="2" Content="Start" Command="{Binding StartCommand}" />
-            <Button Grid.Column="4" Content="Stop" Command="{Binding StopCommand}" />
+            <Button Grid.Column="2" x:Name="Start" Content="Start" />
+            <Button Grid.Column="4" x:Name="Stop" Content="Stop" />
         </Grid>
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type vm:Task3DViewModel}">
-        <!--<DataTemplate x:Key="Task3DataTemplate">-->
+    <DataTemplate x:Key="Task3DataTemplate">
+        <h:HelixViewport3D ZoomExtentsWhenLoaded="True">
+            <h:SunLight />
+            <ModelVisual3D Content="{Binding Model3D}" />
+        </h:HelixViewport3D>
+    </DataTemplate>
+
+    <DataTemplate x:Key="Task4DataTemplate">
         <DataTemplate.Resources>
-            <Style TargetType="{x:Type DockPanel}">
-                <Setter Property="Margin" Value="5" />
-            </Style>
+            <c:DiameterRelativeToRect3DSizeConverter x:Key="DiameterRelativeToRect3DSizeConverter" />
+            <c:Rect3DToPointsForLinesConverter x:Key="Rect3DToPointsForLinesConverter" />
+        </DataTemplate.Resources>
+        <h:HelixViewport3D ZoomExtentsWhenLoaded="True">
+            <h:SunLight />
+            <ModelVisual3D x:Name="Model3D" Content="{Binding Model3D}" />
+            <h:BoundingBoxVisual3D x:Name="Rect" 
+                                   Diameter="{Binding BoundingBox, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource DiameterRelativeToRect3DSizeConverter}}"
+                                   BoundingBox="{Binding ElementName=Model3D, Path=Content.Bounds}" 
+                                   Fill="Gray" />
+            <h:LinesVisual3D Color="Red" 
+                             Thickness="1"
+                             Points="{Binding ElementName=Rect, Path=BoundingBox,Converter={StaticResource Rect3DToPointsForLinesConverter}}" />
+        </h:HelixViewport3D>
+    </DataTemplate>
+
+    <DataTemplate x:Key="Task5DataTemplate">
+        <h:HelixViewport3D ZoomExtentsWhenLoaded="True">
+            <i:Interaction.Triggers>
+                <i:DataTrigger Binding="{Binding ZAxisMovementControlPanelViewModel.IsMoveModel3D}" Value="True">
+                    <i:ControlStoryboardAction>
+                        <i:ControlStoryboardAction.Storyboard>
+                            <Storyboard x:Name="MoveModel3DStoryboard">
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="TranslateTransform3D"
+                                                               Storyboard.TargetProperty="OffsetZ"
+                                                               AutoReverse="False" 
+                                                               RepeatBehavior="Forever">
+                                    <LinearDoubleKeyFrame Value="{Binding ZAxisMovementControlPanelViewModel.ZMin,Mode=OneWay}" KeyTime="0:0:2" />
+                                    <LinearDoubleKeyFrame Value="{Binding ZAxisMovementControlPanelViewModel.ZMax,Mode=OneWay}" KeyTime="0:0:6" />
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:8" />
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </i:ControlStoryboardAction.Storyboard>
+                    </i:ControlStoryboardAction>
+                </i:DataTrigger>
+                <i:DataTrigger Binding="{Binding ZAxisMovementControlPanelViewModel.IsMoveModel3D}" Value="False">
+                    <i:ControlStoryboardAction Storyboard="{Binding ElementName=MoveModel3DStoryboard}" ControlStoryboardOption="Stop" />
+                </i:DataTrigger>
+            </i:Interaction.Triggers>
+
+            <h:SunLight />
+            <ModelVisual3D Content="{Binding Model3D}">
+                <ModelVisual3D.Transform>
+                    <TranslateTransform3D x:Name="TranslateTransform3D" />
+                </ModelVisual3D.Transform>
+            </ModelVisual3D>
+        </h:HelixViewport3D>
+    </DataTemplate>
+
+    <dts:Task3DDataTemplateSelector x:Key="Task3DDataTemplateSelector"
+                                    Task3DataTemplate="{StaticResource Task3DataTemplate}"
+                                    Task4DataTemplate="{StaticResource Task4DataTemplate}"
+                                    Task5DataTemplate="{StaticResource Task5DataTemplate}" />
+
+    <DataTemplate DataType="{x:Type vm:Task3DViewModel}">
+        <DataTemplate.Resources>
             <Style TargetType="{x:Type Separator}" BasedOn="{StaticResource HorizontalSeparator}">
                 <Setter Property="Margin" Value="0 5" />
             </Style>
@@ -179,10 +255,8 @@
                                 HorizontalAlignment="Center"/>
             </Grid>
             <Separator DockPanel.Dock="Bottom" />
-            <h:HelixViewport3D ZoomExtentsWhenLoaded="True">
-                <h:SunLight />
-                <ModelVisual3D Content="{Binding Model3D}" />
-            </h:HelixViewport3D>
+            <ContentControl Content="{Binding DataContext, RelativeSource={RelativeSource Self}}" 
+                            ContentTemplateSelector="{StaticResource Task3DDataTemplateSelector}" />
         </DockPanel>
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding Model3D}" Value="{x:Null}">

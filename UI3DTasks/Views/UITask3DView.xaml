@@ -21,7 +21,9 @@
         </cc:EasyListView>
         <Separator DockPanel.Dock="Left"
                    Style="{StaticResource VerticalSeparator}" />
-        <ContentControl Content="{Binding ElementName=Task3DList,Path=SelectedItem}" IsTabStop="False" />
+        <ContentControl Content="{Binding ElementName=Task3DList,Path=SelectedItem}" 
+                        Margin="5"
+                        IsTabStop="False" />
         
         
     </DockPanel>

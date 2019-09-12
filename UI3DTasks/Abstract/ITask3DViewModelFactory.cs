@@ -11,6 +11,6 @@ namespace UI3DTasks.Abstract
     {
         ITask3DViewModel CreateTask3DViewModel(string name);
 
-        IZAxisMovementTas3DViewModel CreateZAxisMovementTas3DViewModel(string name);
+        IZAxisMovementTask3DViewModel CreateZAxisMovementTas3DViewModel(string name);
     }
 }

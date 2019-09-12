@@ -23,7 +23,7 @@ namespace UI3DTasks.Infrastructure
             Bind<IZAxisMovementControlPanelViewModel>().To<ZAxisMovementControlPanelViewModel>();
 
             Bind<ITask3DViewModel>().To<Task3DViewModel>();
-            Bind<IZAxisMovementTas3DViewModel>().To<ZAxisMovementTask3DViewModel>();
+            Bind<IZAxisMovementTask3DViewModel>().To<ZAxisMovementTask3DViewModel>();
             Bind<ITask3DViewModelFactory>().ToFactory();
         }
     }

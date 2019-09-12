@@ -8,13 +8,13 @@ using UI3DTasks.ViewModels.Common;
 
 namespace UI3DTasks.ViewModels
 {
-    internal class ZAxisMovementTask3DViewModel : Task3DViewModel, IZAxisMovementTas3DViewModel
+    internal class ZAxisMovementTask3DViewModel : Task3DViewModel, IZAxisMovementTask3DViewModel
     {
         public ZAxisMovementTask3DViewModel(
             string name,
-            IControlPanelViewModelFactory factoryControlPanelViewModel,
+            IControlPanelViewModelFactory ControlPanelViewModelFactory,
             IZAxisMovementControlPanelViewModel zAxisMovementControlPanelViewModel)
-            : base(name, factoryControlPanelViewModel)
+            : base(name, ControlPanelViewModelFactory)
             => ZAxisMovementControlPanelViewModel = zAxisMovementControlPanelViewModel;
 
         

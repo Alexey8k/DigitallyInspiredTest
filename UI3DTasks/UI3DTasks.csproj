@@ -74,18 +74,19 @@
     <Compile Include="Abstract\ITask3DViewModelFactory.cs" />
     <Compile Include="Abstract\IModelImporter.cs" />
     <Compile Include="Abstract\IControlPanelViewModelFactory.cs" />
+    <Compile Include="Abstract\IZAxisMovementControlPanelViewModelFactory.cs" />
     <Compile Include="AttachedProperties\TextBlock.cs" />
     <Compile Include="Concret\ModelImporter.cs" />
+    <Compile Include="Converters\DiameterRelativeToRect3DSizeConverter.cs" />
+    <Compile Include="Converters\Rect3DToPointsForLinesConverter.cs" />
     <Compile Include="CustomControls\EasyListView.cs" />
+    <Compile Include="DataTemplateSelectors\Task3DDataTemplateSelector.cs" />
     <Compile Include="Infrastructure\UITask3DModule.cs" />
-    <Compile Include="UserControls\ControlPanel.xaml.cs">
-      <DependentUpon>ControlPanel.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\Common\BaseViewModel.cs" />
     <Compile Include="ViewModels\Common\IControlPanelViewModel.cs" />
     <Compile Include="ViewModels\Common\ITask3DViewModel.cs" />
     <Compile Include="ViewModels\Common\IZAxisMovementControlPanelViewModel.cs" />
-    <Compile Include="ViewModels\Common\IZAxisMovementTas3DViewModel.cs" />
+    <Compile Include="ViewModels\Common\IZAxisMovementTask3DViewModel.cs" />
     <Compile Include="ViewModels\ControlPanelViewModel.cs" />
     <Compile Include="ViewModels\Task3DViewModel.cs" />
     <Compile Include="ViewModels\UITask3DViewModel.cs" />
@@ -112,10 +113,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\SliderTheme.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\ControlPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
