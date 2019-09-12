@@ -8,14 +8,10 @@
         Style="{StaticResource WindowStyle}"
         mc:Ignorable="d"
         Title="TaskView" Height="450" Width="800">
-    <Window.DataContext>
-        <Binding Source="{StaticResource ViewModelLocator}" Path="UITask3DViewModel" /> 
-    </Window.DataContext>
-    <DockPanel>
+    
+    <DockPanel DataContext="{Binding UITask3DViewModel,Source={StaticResource ViewModelLocator}}">
         <cc:EasyListView x:Name="Task3DList" Style="{StaticResource Task3DListItemsControl}" 
-                      DockPanel.Dock="Left" ItemsSource="{Binding Tasks}" IsTabStop="False">
-            
-        </cc:EasyListView>
+                         DockPanel.Dock="Left" ItemsSource="{Binding Tasks}" IsTabStop="False" />
         <Separator DockPanel.Dock="Left"
                    Style="{StaticResource VerticalSeparator}" />
         <ContentControl Content="{Binding ElementName=Task3DList,Path=SelectedItem}" 
