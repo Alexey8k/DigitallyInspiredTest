@@ -11,11 +11,17 @@ namespace WpfWindowTheme.WmHandlers
     internal class WmWindowPosChangedHandler : BasePositionHandler
     {
         private const int WM_WINDOWPOSCHANGED = 0x0047;
+        private const int SW_MAXIMIZE = 3;
 
         public override int Massage => WM_WINDOWPOSCHANGED;
 
         public override void Handler(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
+            var windowPlacement = new WINDOWPLACEMENT { length = Marshal.SizeOf<WINDOWPLACEMENT>() };
+            var IsMaximizeWindowState = GetWindowPlacement(hwnd, ref windowPlacement);
+
+            if (windowPlacement.showCmd != SW_MAXIMIZE) return;
+
             var wp = Marshal.PtrToStructure<WINDOWPOS>(lParam);
             var maxPosition = MaxWindowPosition(hwnd);
 
@@ -32,6 +38,9 @@ namespace WpfWindowTheme.WmHandlers
         [DllImport("user32.dll", SetLastError = true)]
         private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
 
         [StructLayout(LayoutKind.Sequential)]
         private struct WINDOWPOS
@@ -43,6 +52,16 @@ namespace WpfWindowTheme.WmHandlers
             public int cx;
             public int cy;
             public uint flags;
+        }
+
+        private struct WINDOWPLACEMENT
+        {
+            public int length;
+            public int flags;
+            public int showCmd;
+            public System.Drawing.Point ptMinPosition;
+            public System.Drawing.Point ptMaxPosition;
+            public System.Drawing.Rectangle rcNormalPosition;
         }
     }
 }
