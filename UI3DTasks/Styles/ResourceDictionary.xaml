@@ -222,6 +222,9 @@
                 <i:DataTrigger Binding="{Binding ZAxisMovementControlPanelViewModel.IsMoveModel3D}" Value="False">
                     <i:ControlStoryboardAction Storyboard="{Binding ElementName=MoveModel3DStoryboard}" ControlStoryboardOption="Stop" />
                 </i:DataTrigger>
+                <i:EventTrigger EventName="Loaded">
+                    <i:ChangePropertyAction PropertyName="IsMoveModel3D" TargetObject="{Binding ZAxisMovementControlPanelViewModel}" Value="False" />
+                </i:EventTrigger>
             </i:Interaction.Triggers>
 
             <h:SunLight />
