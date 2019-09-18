@@ -60,6 +60,7 @@
                             </Grid.RowDefinitions>
                             <Border Grid.RowSpan="2" 
                                     Background="Black"
+                                    Margin="1"
                                     CornerRadius="{Binding CornerRadius,ElementName=PART_Conteiner}">
                                 <Border.Effect>
                                     <DropShadowEffect Color="Black" ShadowDepth="0" BlurRadius="9" />
