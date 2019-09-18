@@ -84,7 +84,12 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\WindowMessage.Interceptor\WindowMessage.Interceptor.csproj">
+      <Project>{9f582cb8-7ca8-48a6-a969-9f192643e7cb}</Project>
+      <Name>WindowMessage.Interceptor</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Themes\WindowStyle.xaml">
       <SubType>Designer</SubType>
