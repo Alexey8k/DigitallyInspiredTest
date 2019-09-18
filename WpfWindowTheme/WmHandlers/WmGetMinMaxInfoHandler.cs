@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using WindowMessage.Interceptor;
 
 namespace WpfWindowTheme.WmHandlers
 {
@@ -14,19 +15,19 @@ namespace WpfWindowTheme.WmHandlers
 
         public override int Massage => WM_GETMINMAXINFO;
 
-        public override void Handler(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        public override void Handler(ref WmMessage wmMessage)
         {
-            var mmi = Marshal.PtrToStructure<MINMAXINFO>(lParam);
-            var maxPosition = MaxWindowPosition(hwnd);
+            var mmi = Marshal.PtrToStructure<MINMAXINFO>(wmMessage.LParam);
+            var maxPosition = MaxWindowPosition(wmMessage.Hwnd);
 
             mmi.ptMaxPosition.X = maxPosition.X;
             mmi.ptMaxPosition.Y = maxPosition.Y;
             mmi.ptMaxSize.X = maxPosition.Width;
             mmi.ptMaxSize.Y = maxPosition.Height;
 
-            Marshal.StructureToPtr(mmi, lParam, true);
+            Marshal.StructureToPtr(mmi, wmMessage.LParam, true);
 
-            handled = true;
+            wmMessage.Handled = true;
         }
 
         [StructLayout(LayoutKind.Sequential)]

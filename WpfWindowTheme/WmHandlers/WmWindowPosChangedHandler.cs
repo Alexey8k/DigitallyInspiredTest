@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using WindowMessage.Interceptor;
 
 namespace WpfWindowTheme.WmHandlers
 {
@@ -15,15 +16,15 @@ namespace WpfWindowTheme.WmHandlers
 
         public override int Massage => WM_WINDOWPOSCHANGED;
 
-        public override void Handler(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        public override void Handler(ref WmMessage wmMessage)
         {
             var windowPlacement = new WINDOWPLACEMENT { length = Marshal.SizeOf<WINDOWPLACEMENT>() };
-            var IsMaximizeWindowState = GetWindowPlacement(hwnd, ref windowPlacement);
+            var IsMaximizeWindowState = GetWindowPlacement(wmMessage.Hwnd, ref windowPlacement);
 
             if (windowPlacement.showCmd != SW_MAXIMIZE) return;
 
-            var wp = Marshal.PtrToStructure<WINDOWPOS>(lParam);
-            var maxPosition = MaxWindowPosition(hwnd);
+            var wp = Marshal.PtrToStructure<WINDOWPOS>(wmMessage.LParam);
+            var maxPosition = MaxWindowPosition(wmMessage.Hwnd);
 
             wp.x = maxPosition.X;
             wp.y = maxPosition.Y;
@@ -32,7 +33,7 @@ namespace WpfWindowTheme.WmHandlers
 
             SetWindowPos(wp.hwnd, wp.hwndInsertAfter, wp.x, wp.y, wp.cx, wp.cy, wp.flags);
 
-            handled = false;
+            wmMessage.Handled = false;
         }
 
         [DllImport("user32.dll", SetLastError = true)]
