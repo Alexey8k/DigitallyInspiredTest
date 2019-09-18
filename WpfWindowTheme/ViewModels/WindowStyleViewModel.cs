@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using WindowMessage.Interceptor;
 using WpfWindowTheme.Models;
-using WpfWindowTheme.Services;
 using WpfWindowTheme.ViewModels.Common;
 using WpfWindowTheme.WmHandlers;
 

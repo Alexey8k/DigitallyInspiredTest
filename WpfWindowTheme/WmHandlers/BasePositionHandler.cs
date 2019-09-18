@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using WpfWindowTheme.Services;
+using WindowMessage.Interceptor;
 
 namespace WpfWindowTheme.WmHandlers
 {

@@ -6,34 +6,44 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 
-namespace WpfWindowTheme.Services
+namespace WindowMessage.Interceptor
 {
-    internal class WmInterceptorService
+    public class WmInterceptorService : IWmInterceptorService
     {
         private readonly Dictionary<int, WmHandler> _messageHendlers = new Dictionary<int, WmHandler>();
-        private readonly HwndSource _source;
         private readonly HwndSourceHook _hwndSourceHook;
+        private HwndSource _source;
 
         public WmInterceptorService(Window window)
         {
-            _source = PresentationSource.FromVisual(window) as HwndSource;
             _hwndSourceHook = new HwndSourceHook(WindowProc);
-            AddHook();
+            AddHook(window);
             window.Closed += window_Closed;
         }
 
         public void AddHandler(WmHandler wmHandler) => _messageHendlers.Add(wmHandler.Massage, wmHandler);
 
-        private void AddHook() => _source?.AddHook(WindowProc);
+        private void AddHook(Window window)
+            => (_source = PresentationSource.FromVisual(window) as HwndSource)?.AddHook(_hwndSourceHook);
 
         private void RemoveHook() => _source?.RemoveHook(_hwndSourceHook);
 
         private IntPtr WindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (_messageHendlers.TryGetValue(msg, out WmHandler wmHandler))
-                wmHandler.Handler(hwnd, msg, wParam, lParam, ref handled);
+            var wmMessage = new WmMessage
+            {
+                Hwnd = hwnd,
+                Message = msg,
+                WParam = wParam,
+                LParam = lParam
+            };
 
-            return IntPtr.Zero;
+            if (_messageHendlers.TryGetValue(msg, out WmHandler wmHandler))
+                wmHandler.Handler(ref wmMessage);
+
+            handled = wmMessage.Handled;
+
+            return wmHandler?.ReturnValue ?? IntPtr.Zero;
         }
 
         private void window_Closed(object sender, EventArgs e) => RemoveHook();
