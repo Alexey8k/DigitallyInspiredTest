@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using WindowMessage.Interceptor;
+using WpfWindowTheme.Abstract;
 using WpfWindowTheme.Models;
 using WpfWindowTheme.ViewModels.Common;
 using WpfWindowTheme.WmHandlers;
@@ -16,7 +17,11 @@ namespace WpfWindowTheme.ViewModels
 {
     internal class WindowStyleViewModel : BaseViewModel
     {
-        private WmInterceptorService _wmInterceptorService;
+        private IWmInterceptorServiceFactory _wmInterceptorServiceFactory;
+        private IWmInterceptorService _wmInterceptorService;
+
+        public WindowStyleViewModel(IWmInterceptorServiceFactory wmInterceptorServiceFactory)
+            => _wmInterceptorServiceFactory = wmInterceptorServiceFactory;
 
         public WindowCaption WindowCaption { get; private set; } = new WindowCaption
         {
@@ -48,7 +53,7 @@ namespace WpfWindowTheme.ViewModels
 
         private void InitWmInterceptorService(Window window)
         {
-            _wmInterceptorService = new WmInterceptorService(window);
+            _wmInterceptorService = _wmInterceptorServiceFactory.Create(window);
             _wmInterceptorService.AddHandler(new WmWindowPosChangedHandler());
             _wmInterceptorService.AddHandler(new WmGetMinMaxInfoHandler());
         }
