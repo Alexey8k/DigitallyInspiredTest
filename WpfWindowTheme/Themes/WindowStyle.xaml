@@ -8,7 +8,6 @@
         <Style.Resources>
             <SolidColorBrush x:Key="WindowCaptionForegroundInactive" Color="LightSteelBlue" />
             <converter:IconValueNullToDefaultIconConverter x:Key="IconValueNullToDefaultIconConverter" />
-            <vm:WindowStyleViewModel x:Key="WindowStyleViewModel" />
 
             <Style x:Key="WindowCaptionButton" TargetType="{x:Type Button}">
                 <Setter Property="Focusable" Value="False" />
@@ -68,7 +67,7 @@
                             </Border>
                             <Border x:Name="PART_WindowCaption"
                                     Grid.Row="0"
-                                    DataContext="{Binding Source={StaticResource WindowStyleViewModel}}"
+                                    DataContext="{Binding Source={x:Static vm:ViewModelLocator.WindowStyleViewModel}}"
                                     CornerRadius="{Binding CornerRadius,ElementName=PART_Conteiner}"
                                     TextBlock.Foreground="{Binding WindowCaption.Foreground}"
                                     Background="{Binding WindowCaption.Background}"
